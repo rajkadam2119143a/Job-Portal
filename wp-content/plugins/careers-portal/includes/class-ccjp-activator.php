@@ -23,6 +23,9 @@ class CCJP_Activator {
 
 		CCJP_Pages::maybe_create_careers_page();
 		CCJP_GravityForms::maybe_create_form();
+		if ( did_action( 'elementor/loaded' ) ) {
+			CCJP_Popups::maybe_create_apply_popup();
+		}
 
 		flush_rewrite_rules();
 		update_option( 'ccjp_version', CCJP_VERSION );

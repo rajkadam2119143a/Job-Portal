@@ -74,12 +74,12 @@ class CCJP_Widget_Apply_Button extends CCJP_Widget_Base {
 			array(
 				'label'       => __( 'Open Method', 'careers-portal' ),
 				'type'        => Controls_Manager::SELECT,
-				'default'     => 'anchor',
-				'options'     => array(
+				'default'     => class_exists( '\ElementorPro\Modules\Popup\Document' ) && CCJP_Popups::get_apply_popup_id() ? 'popup' : 'anchor',
+				'options'     => array_filter( array(
+					'popup'    => class_exists( '\ElementorPro\Modules\Popup\Document' ) ? __( 'Modal Popup', 'careers-portal' ) : false,
 					'anchor'   => __( 'Scroll to Application Form (same page)', 'careers-portal' ),
 					'job_page' => __( 'Dedicated Job Page', 'careers-portal' ),
-				),
-				'description' => __( 'Modal and slide-panel opening arrive with the Application Form widget.', 'careers-portal' ),
+				) ),
 			)
 		);
 
@@ -215,9 +215,18 @@ class CCJP_Widget_Apply_Button extends CCJP_Widget_Base {
 
 		$href = '#ccjp-apply';
 		if ( $job_id ) {
-			$href = 'job_page' === $settings['open_method']
-				? get_permalink( $job_id )
-				: get_permalink( $job_id ) . '#ccjp-apply';
+			if ( 'popup' === $settings['open_method'] && class_exists( '\ElementorPro\Modules\Popup\Module' ) && CCJP_Popups::get_apply_popup_id() ) {
+				$popup_id = CCJP_Popups::get_apply_popup_id();
+				\ElementorPro\Modules\Popup\Module::add_popup_to_location( $popup_id );
+				$href = \Elementor\Plugin::$instance->frontend->create_action_hash(
+					'popup:open',
+					array( 'id' => $popup_id, 'toggle' => false )
+				);
+			} elseif ( 'job_page' === $settings['open_method'] ) {
+				$href = get_permalink( $job_id );
+			} else {
+				$href = get_permalink( $job_id ) . '#ccjp-apply';
+			}
 		} elseif ( ! $this->is_editing() ) {
 			return;
 		}
