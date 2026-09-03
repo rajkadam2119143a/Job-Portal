@@ -21,3 +21,4 @@ wp-content/themes/hello-elementor/
 wp-content/themes/twentytwenty*/
 wp-content/cache/
 *.log
+checkpoints/
