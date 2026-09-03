@@ -373,3 +373,58 @@
 .ccjp-footer-links a:hover {
 	color: var(--e-global-color-primary, #4c6fb0);
 }
+
+.ccjp-stat-card {
+	padding: 20px;
+	background: #fff;
+	border: 1px solid #e4e6ec;
+	border-radius: 14px;
+}
+
+.ccjp-stat-card__icon {
+	margin-bottom: 8px;
+	font-size: 20px;
+	color: var(--e-global-color-primary, #4c6fb0);
+}
+
+.ccjp-stat-card__number {
+	font-family: var(--e-global-typography-primary-font-family, inherit);
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 1.1;
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-stat-card__label {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-hero__stats-row {
+	display: flex;
+	gap: 16px;
+}
+
+.ccjp-hero__stats-row > .elementor-element {
+	flex: 1 1 0;
+}
+
+.ccjp-pill-tags {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 12px;
+	font-size: 13px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-pill-tags a {
+	padding: 4px 12px;
+	border-radius: 999px;
+	background: var(--e-global-color-ccjp_surface_muted, #f7f8fa);
+	color: var(--e-global-color-text, #4b5563);
+	text-decoration: none;
+	font-size: 13px;
+}

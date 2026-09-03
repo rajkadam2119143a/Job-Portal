@@ -29,6 +29,7 @@ class CCJP_Elementor {
 		'CCJP_Widget_Application_Form',
 		'CCJP_Widget_Application_Success',
 		'CCJP_Widget_Job_Description',
+		'CCJP_Widget_Stat_Card',
 	);
 
 	/**
