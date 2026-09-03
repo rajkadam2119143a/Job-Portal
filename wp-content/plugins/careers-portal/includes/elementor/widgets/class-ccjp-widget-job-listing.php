@@ -180,6 +180,8 @@ class CCJP_Widget_Job_Listing extends CCJP_Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		$this->register_job_card_style_controls();
 	}
 
 	private function term_options( $taxonomy ) {

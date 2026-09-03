@@ -2,13 +2,13 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Reserves the handful of URLs the plugin's widgets actually need to exist
- * somewhere (a hub for "all teams", "all locations", and the application
- * success confirmation) with blank pages for a later phase to build in
- * Elementor. Purely editorial pages (About, Life at Company) are NOT
- * created here — those have no dynamic-data dependency, so manufacturing
- * them would be the plugin dictating page structure rather than providing
- * functionality; the site owner creates those like any other WP page.
+ * Reserves the URLs the plugin's widgets and the site-wide navigation need
+ * to exist somewhere: hubs for "all teams"/"all departments"/"all
+ * locations", the application success confirmation, and (since the global
+ * header links to them) About/Contact. About/Contact get a minimal
+ * placeholder paragraph rather than staying fully blank, since a nav link
+ * to an empty-looking page reads as broken; the site owner is expected to
+ * replace that placeholder copy, not the page itself.
  *
  * Runs from CCJP_Activator::activate() and again from CCJP_Plugin's
  * version-bump hook (idempotent — checked by path before every insert) so
@@ -27,20 +27,34 @@ class CCJP_Pages {
 	public static function required_pages() {
 		return array(
 			self::SLUG              => array(
-				'title'  => __( 'Careers', 'careers-portal' ),
-				'parent' => '',
+				'title'   => __( 'Careers', 'careers-portal' ),
+				'parent'  => '',
 			),
 			'teams'                  => array(
-				'title'  => __( 'Teams', 'careers-portal' ),
-				'parent' => self::SLUG,
+				'title'   => __( 'Teams', 'careers-portal' ),
+				'parent'  => self::SLUG,
+			),
+			'departments'            => array(
+				'title'   => __( 'Departments', 'careers-portal' ),
+				'parent'  => self::SLUG,
 			),
 			'locations'              => array(
-				'title'  => __( 'Locations', 'careers-portal' ),
-				'parent' => self::SLUG,
+				'title'   => __( 'Locations', 'careers-portal' ),
+				'parent'  => self::SLUG,
+			),
+			'about'                  => array(
+				'title'   => __( 'About', 'careers-portal' ),
+				'parent'  => self::SLUG,
+				'content' => __( 'Tell candidates who you are, what you build, and why it matters. Replace this placeholder with your own About Us content.', 'careers-portal' ),
+			),
+			'contact'                => array(
+				'title'   => __( 'Contact', 'careers-portal' ),
+				'parent'  => self::SLUG,
+				'content' => __( 'Have a question before applying? Replace this placeholder with your real contact details or a contact form.', 'careers-portal' ),
 			),
 			'application-success'    => array(
-				'title'  => __( 'Application Submitted', 'careers-portal' ),
-				'parent' => self::SLUG,
+				'title'   => __( 'Application Submitted', 'careers-portal' ),
+				'parent'  => self::SLUG,
 			),
 		);
 	}
@@ -71,7 +85,7 @@ class CCJP_Pages {
 					'post_name'      => $slug,
 					'post_parent'    => $parent_id,
 					'post_status'    => 'publish',
-					'post_content'   => '',
+					'post_content'   => isset( $config['content'] ) ? '<!-- wp:paragraph --><p>' . esc_html( $config['content'] ) . '</p><!-- /wp:paragraph -->' : '',
 					'comment_status' => 'closed',
 					'ping_status'    => 'closed',
 				)

@@ -2,12 +2,6 @@
 defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 /**
  * Careers Job Card — a single, standalone card (Current Job or a specific
@@ -101,102 +95,7 @@ class CCJP_Widget_Job_Card extends CCJP_Widget_Base {
 
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_style_card',
-			array(
-				'label' => __( 'Card', 'careers-portal' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Background::get_type(),
-			array( 'name' => 'card_background', 'selector' => '{{WRAPPER}} .ccjp-job-card' )
-		);
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			array( 'name' => 'card_border', 'selector' => '{{WRAPPER}} .ccjp-job-card' )
-		);
-
-		$this->add_control(
-			'card_border_radius',
-			array(
-				'label'      => __( 'Border Radius', 'careers-portal' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .ccjp-job-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			array( 'name' => 'card_shadow', 'selector' => '{{WRAPPER}} .ccjp-job-card' )
-		);
-
-		$this->add_control(
-			'card_padding',
-			array(
-				'label'      => __( 'Padding', 'careers-portal' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', 'em', '%' ),
-				'selectors'  => array(
-					'{{WRAPPER}} .ccjp-job-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_style_typography',
-			array(
-				'label' => __( 'Typography', 'careers-portal' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
-		);
-
-		$this->add_control(
-			'title_color',
-			array(
-				'label'     => __( 'Title Color', 'careers-portal' ),
-				'type'      => Controls_Manager::COLOR,
-				'global'    => array( 'default' => Global_Colors::COLOR_PRIMARY ),
-				'selectors' => array( '{{WRAPPER}} .ccjp-job-card__title' => 'color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'title_typography',
-				'global'   => array( 'default' => Global_Typography::TYPOGRAPHY_PRIMARY ),
-				'selector' => '{{WRAPPER}} .ccjp-job-card__title',
-			)
-		);
-
-		$this->add_control(
-			'meta_color',
-			array(
-				'label'     => __( 'Meta Text Color', 'careers-portal' ),
-				'type'      => Controls_Manager::COLOR,
-				'global'    => array( 'default' => Global_Colors::COLOR_TEXT ),
-				'selectors' => array( '{{WRAPPER}} .ccjp-job-card__meta-item' => 'color: {{VALUE}};' ),
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			array(
-				'name'     => 'meta_typography',
-				'global'   => array( 'default' => Global_Typography::TYPOGRAPHY_TEXT ),
-				'selector' => '{{WRAPPER}} .ccjp-job-card__meta-item',
-			)
-		);
-
-		$this->end_controls_section();
+		$this->register_job_card_style_controls();
 	}
 
 	private function job_options() {

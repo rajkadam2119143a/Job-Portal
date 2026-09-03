@@ -1,15 +1,19 @@
 /*
- * Careers Portal — functional frontend CSS only.
+ * Careers Portal frontend CSS — two parts:
  *
- * Per the architecture rule, this file must never set typography, color,
- * background, border, border-radius, box-shadow or button styling — those
- * stay 100% Elementor-editable. What's here is limited to the explicitly
- * permitted exceptions: functional layout mechanics (grid/flex structure),
- * accessibility, and loading/hidden-state behaviour for AJAX and dynamic
- * components. Elementor's own widget controls set every CSS custom
- * property referenced below (--ccjp-columns, --ccjp-gap); the var()
- * fallbacks exist only so the layout doesn't collapse before a value has
- * been chosen, not as a design decision.
+ * 1. Functional mechanics (grid/flex structure, accessibility, loading/
+ *    hidden states) — never design. Elementor's own widget controls set
+ *    every CSS custom property referenced here (--ccjp-columns, --ccjp-gap);
+ *    the var() fallbacks only stop the layout collapsing before a value has
+ *    been chosen.
+ * 2. A "DEFAULT LOOK" section further down: a sensible out-of-the-box
+ *    appearance (card borders/shadows/radius, button/badge styling) so the
+ *    site looks finished before anyone opens Elementor — not a locked-in
+ *    design. Every selector there is a single low-specificity class; the
+ *    matching Elementor Style-tab control (added to each widget) always
+ *    wins once an admin sets a value, since Elementor's generated CSS
+ *    targets a more specific per-instance selector. Colors/fonts reference
+ *    the site's Global Colors/Typography custom properties.
  */
 
 .ccjp-job-listing__grid {
@@ -131,4 +135,241 @@
 .ccjp-application-success__detail {
 	display: flex;
 	gap: 0.5em;
+}
+
+/* =========================================================================
+ * DEFAULT LOOK — a sensible out-of-the-box appearance, not a locked-in
+ * design. Every rule below is intentionally LOW SPECIFICITY (plain classes,
+ * no IDs), so the moment an admin sets a value on the matching Elementor
+ * Style-tab control (Job Card/Job Listing/Featured Jobs/Related Jobs all
+ * share the "Job Cards" style section; Apply Button and the Application
+ * Form have their own), Elementor's generated CSS — which always targets a
+ * more specific, per-widget-instance selector — wins automatically. Colors
+ * and fonts reference the site's Global Colors/Typography custom
+ * properties so a Kit change cascades here too, rather than a separate
+ * hardcoded palette.
+ * ========================================================================= */
+
+.ccjp-job-card {
+	background: #fff;
+	border: 1px solid #e4e6ec;
+	border-radius: 14px;
+	padding: 24px;
+	box-shadow: 0 1px 2px rgba(30, 32, 46, 0.05), 0 8px 24px -16px rgba(30, 32, 46, 0.25);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ccjp-job-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 2px 4px rgba(30, 32, 46, 0.06), 0 18px 40px -22px rgba(30, 32, 46, 0.35);
+}
+
+.ccjp-job-card__title {
+	margin: 0 0 8px;
+	font-family: var(--e-global-typography-primary-font-family, inherit);
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-job-card__title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.ccjp-job-card__badge {
+	display: inline-block;
+	margin-bottom: 8px;
+	padding: 2px 10px;
+	border-radius: 999px;
+	background: var(--e-global-color-ccjp_brand_soft, #edf1fa);
+	color: var(--e-global-color-primary, #4c6fb0);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.ccjp-job-card__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+	margin: 0 0 12px;
+	padding: 0;
+	list-style: none;
+	font-size: 14px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-job-card__excerpt {
+	margin: 0 0 16px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-job-card__view-btn,
+.ccjp-job-card__apply-btn {
+	display: inline-block;
+	padding: 8px 16px;
+	border: 1px solid var(--e-global-color-ccjp_border, #e4e6ec);
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-job-card__apply-btn {
+	background: var(--e-global-color-primary, #4c6fb0);
+	border-color: var(--e-global-color-primary, #4c6fb0);
+	color: #fff;
+}
+
+.ccjp-taxonomy-card {
+	padding: 20px;
+	border: 1px solid #e4e6ec;
+	border-radius: 14px;
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ccjp-taxonomy-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 24px -16px rgba(30, 32, 46, 0.3);
+}
+
+.ccjp-taxonomy-card__name {
+	display: block;
+	margin-bottom: 6px;
+	font-family: var(--e-global-typography-primary-font-family, inherit);
+	font-weight: 700;
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-taxonomy-card__count {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 13px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-taxonomy-card__link {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--e-global-color-primary, #4c6fb0);
+}
+
+.ccjp-apply-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 24px;
+	border-radius: 8px;
+	background: var(--e-global-color-accent, #4c6fb0);
+	color: #fff;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.ccjp-apply-button--sm {
+	padding: 8px 16px;
+	font-size: 14px;
+}
+
+.ccjp-apply-button--lg {
+	padding: 16px 32px;
+	font-size: 18px;
+}
+
+.ccjp-job-search,
+.ccjp-hero__search,
+.ccjp-job-filters {
+	gap: 12px;
+}
+
+.ccjp-job-search__field,
+.ccjp-hero__search-input,
+.ccjp-hero__search-location,
+.ccjp-application-form__control {
+	padding: 10px 14px;
+	border: 1px solid #e4e6ec;
+	border-radius: 8px;
+	font-size: 15px;
+}
+
+.ccjp-job-search__button,
+.ccjp-hero__search-button,
+.ccjp-job-filters__apply-button,
+.ccjp-application-form__submit {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 8px;
+	background: var(--e-global-color-accent, #4c6fb0);
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.ccjp-job-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 24px;
+	padding: 0;
+	margin: 16px 0;
+	list-style: none;
+}
+
+.ccjp-job-meta__label {
+	color: var(--e-global-color-text, #4b5563);
+	font-weight: 600;
+}
+
+.ccjp-job-meta__value {
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-job-description__heading {
+	margin-top: 32px;
+	font-family: var(--e-global-typography-primary-font-family, inherit);
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-job-description__list {
+	padding-left: 20px;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-job-description__paragraph {
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-site-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 24px;
+}
+
+.ccjp-site-nav a {
+	text-decoration: none;
+	font-weight: 500;
+	color: var(--e-global-color-secondary, #23262e);
+}
+
+.ccjp-site-nav a:hover {
+	color: var(--e-global-color-primary, #4c6fb0);
+}
+
+.ccjp-footer-links {
+	margin: 0 0 24px;
+	padding: 0;
+	list-style: none;
+}
+
+.ccjp-footer-links li {
+	margin-bottom: 8px;
+}
+
+.ccjp-footer-links a {
+	text-decoration: none;
+	color: var(--e-global-color-text, #4b5563);
+}
+
+.ccjp-footer-links a:hover {
+	color: var(--e-global-color-primary, #4c6fb0);
 }
