@@ -1,0 +1,23 @@
+# WordPress core - not tracked, only our plugin/theme work
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/xmlrpc.php
+/index.php
+/license.txt
+/readme.html
+wp-content/uploads/
+wp-content/plugins/akismet/
+wp-content/plugins/classic-editor/
+wp-content/plugins/elementor/
+wp-content/plugins/elementor-pro/
+wp-content/plugins/elementor-pro-activator/
+wp-content/plugins/gravityforms/
+wp-content/plugins/advanced-custom-fields/
+wp-content/plugins/wp-mail-smtp/
+wp-content/plugins/wp-rest-api-v2-menus/
+wp-content/plugins/hello.php
+wp-content/themes/hello-elementor/
+wp-content/themes/twentytwenty*/
+wp-content/cache/
+*.log

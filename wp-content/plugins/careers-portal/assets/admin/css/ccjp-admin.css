@@ -1,0 +1,44 @@
+.ccjp-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+	background: #f0f0f1;
+	color: #1d2327;
+}
+
+.ccjp-status--app_new {
+	background: #e5f1ff;
+	color: #0a4b9f;
+}
+
+.ccjp-status--app_under_review {
+	background: #fff4e5;
+	color: #8a5a00;
+}
+
+.ccjp-status--app_shortlisted {
+	background: #eafaf1;
+	color: #14653e;
+}
+
+.ccjp-status--app_interview {
+	background: #f1e8ff;
+	color: #5a3aa5;
+}
+
+.ccjp-status--app_offer {
+	background: #e5f7ff;
+	color: #0a6f9f;
+}
+
+.ccjp-status--app_hired {
+	background: #dff6e0;
+	color: #1e7d2c;
+}
+
+.ccjp-status--app_rejected {
+	background: #fde8e8;
+	color: #9f1a1a;
+}

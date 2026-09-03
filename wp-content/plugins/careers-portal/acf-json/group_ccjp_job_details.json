@@ -1,0 +1,166 @@
+{
+    "key": "group_ccjp_job_details",
+    "title": "Job Details",
+    "fields": [
+        {
+            "key": "field_ccjp_job_id",
+            "label": "Job ID",
+            "name": "ccjp_job_id",
+            "type": "text",
+            "instructions": "Reference number, e.g. JR40606.",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_country",
+            "label": "Country",
+            "name": "ccjp_country",
+            "type": "text",
+            "instructions": "e.g. India, India (Remote).",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_deadline",
+            "label": "Deadline",
+            "name": "ccjp_deadline",
+            "type": "date_picker",
+            "instructions": "Application deadline for this job.",
+            "required": 0,
+            "display_format": "F j, Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        },
+        {
+            "key": "field_ccjp_featured",
+            "label": "Featured",
+            "name": "ccjp_featured",
+            "type": "true_false",
+            "instructions": "Show this job in Featured Jobs listings.",
+            "required": 0,
+            "ui": 1,
+            "default_value": 0
+        },
+        {
+            "key": "field_ccjp_short_description",
+            "label": "Short Description",
+            "name": "ccjp_short_description",
+            "type": "textarea",
+            "instructions": "One or two sentence summary used on job cards.",
+            "required": 0,
+            "rows": 3
+        },
+        {
+            "key": "field_ccjp_responsibilities",
+            "label": "Responsibilities",
+            "name": "ccjp_responsibilities",
+            "type": "textarea",
+            "instructions": "One responsibility per line.",
+            "required": 0,
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_qualifications",
+            "label": "Qualifications",
+            "name": "ccjp_qualifications",
+            "type": "textarea",
+            "instructions": "One qualification per line.",
+            "required": 0,
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_skills",
+            "label": "Skills",
+            "name": "ccjp_skills",
+            "type": "textarea",
+            "instructions": "One skill per line.",
+            "required": 0,
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_good_to_have",
+            "label": "Good to Have",
+            "name": "ccjp_good_to_have",
+            "type": "textarea",
+            "instructions": "One item per line.",
+            "required": 0,
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_benefits",
+            "label": "Benefits",
+            "name": "ccjp_benefits",
+            "type": "textarea",
+            "instructions": "One benefit per line.",
+            "required": 0,
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_additional_information",
+            "label": "Additional Information",
+            "name": "ccjp_additional_information",
+            "type": "textarea",
+            "instructions": "Free paragraph, not a list.",
+            "required": 0,
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ccjp_experience",
+            "label": "Experience Level",
+            "name": "ccjp_experience",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "choices": {
+                "0-2 Years": "0-2 Years",
+                "2-5 Years": "2-5 Years",
+                "5-8 Years": "5-8 Years",
+                "8+ Years": "8+ Years"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_ccjp_salary",
+            "label": "Salary",
+            "name": "ccjp_salary",
+            "type": "text",
+            "instructions": "Free text, e.g. ₹12-18 LPA.",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_contact_email",
+            "label": "Contact Email",
+            "name": "ccjp_contact_email",
+            "type": "email",
+            "instructions": "Used by later Dynamic Tags / Elementor widgets.",
+            "required": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "career_job"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Job fields beyond the native title/content/taxonomies/status.",
+    "show_in_rest": 0
+}

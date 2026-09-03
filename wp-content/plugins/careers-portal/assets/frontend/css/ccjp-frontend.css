@@ -1,0 +1,134 @@
+/*
+ * Careers Portal — functional frontend CSS only.
+ *
+ * Per the architecture rule, this file must never set typography, color,
+ * background, border, border-radius, box-shadow or button styling — those
+ * stay 100% Elementor-editable. What's here is limited to the explicitly
+ * permitted exceptions: functional layout mechanics (grid/flex structure),
+ * accessibility, and loading/hidden-state behaviour for AJAX and dynamic
+ * components. Elementor's own widget controls set every CSS custom
+ * property referenced below (--ccjp-columns, --ccjp-gap); the var()
+ * fallbacks exist only so the layout doesn't collapse before a value has
+ * been chosen, not as a design decision.
+ */
+
+.ccjp-job-listing__grid {
+	display: grid;
+	grid-template-columns: repeat(var(--ccjp-columns, 1), 1fr);
+	gap: var(--ccjp-gap, 0);
+	align-items: stretch;
+}
+
+.ccjp-job-card__actions {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ccjp-job-search,
+.ccjp-hero__search,
+.ccjp-job-filters {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ccjp-job-filters {
+	flex-direction: column;
+}
+
+.ccjp-job-filters__actions {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.ccjp-hero {
+	position: relative;
+}
+
+.ccjp-hero__overlay {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.ccjp-hero__content {
+	position: relative;
+}
+
+.ccjp-job-meta--inline {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+}
+
+.ccjp-job-meta--list {
+	list-style: none;
+}
+
+/* Loading state while an AJAX request is in flight — accessibility/UX
+ * affordance only, no visual design beyond a functional dimmed state. */
+.ccjp-job-listing--loading .ccjp-job-listing__grid {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.ccjp-job-listing__load-more-button[data-loading="1"] {
+	pointer-events: none;
+}
+
+/* Elementor editor / no-context preview placeholder: visually distinct
+ * enough to signal "this is a placeholder," not final design. */
+.ccjp-job-card--placeholder {
+	opacity: 0.6;
+}
+
+[data-ccjp-listing] .ccjp-job-listing__empty {
+	display: block;
+}
+
+.ccjp-taxonomy-card {
+	display: block;
+}
+
+.ccjp-application-form__fields {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ccjp-form-gap, 0);
+}
+
+.ccjp-application-form__group {
+	display: flex;
+	flex-direction: column;
+}
+
+.ccjp-application-form__control {
+	width: 100%;
+}
+
+.ccjp-application-form__checkbox-label {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+}
+
+.ccjp-application-form__error {
+	/* Accessibility affordance, not a color/design decision — the actual
+	 * error color comes from Elementor's own text-color control when one
+	 * is added to this class, this just guarantees it reads as an alert. */
+	font-weight: bold;
+}
+
+.ccjp-application-success__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em;
+}
+
+.ccjp-application-success__details {
+	display: flex;
+	flex-direction: column;
+}
+
+.ccjp-application-success__detail {
+	display: flex;
+	gap: 0.5em;
+}

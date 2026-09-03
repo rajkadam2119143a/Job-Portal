@@ -1,0 +1,148 @@
+{
+    "key": "group_ccjp_application_details",
+    "title": "Application Details",
+    "fields": [
+        {
+            "key": "field_ccjp_first_name",
+            "label": "First Name",
+            "name": "ccjp_first_name",
+            "type": "text",
+            "required": 1
+        },
+        {
+            "key": "field_ccjp_last_name",
+            "label": "Last Name",
+            "name": "ccjp_last_name",
+            "type": "text",
+            "required": 1
+        },
+        {
+            "key": "field_ccjp_email",
+            "label": "Email",
+            "name": "ccjp_email",
+            "type": "email",
+            "required": 1
+        },
+        {
+            "key": "field_ccjp_phone",
+            "label": "Phone",
+            "name": "ccjp_phone",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_current_location",
+            "label": "Current Location",
+            "name": "ccjp_current_location",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_resume",
+            "label": "Resume",
+            "name": "ccjp_resume",
+            "type": "file",
+            "instructions": "Upload handling/validation is added in a later phase; the field just needs to exist and be attachable now.",
+            "required": 0,
+            "return_format": "id",
+            "mime_types": "pdf,doc,docx"
+        },
+        {
+            "key": "field_ccjp_cover_letter",
+            "label": "Cover Letter",
+            "name": "ccjp_cover_letter",
+            "type": "textarea",
+            "required": 0,
+            "rows": 6
+        },
+        {
+            "key": "field_ccjp_linkedin",
+            "label": "LinkedIn",
+            "name": "ccjp_linkedin",
+            "type": "url",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_portfolio",
+            "label": "Portfolio",
+            "name": "ccjp_portfolio",
+            "type": "url",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_years_of_experience",
+            "label": "Years of Experience",
+            "name": "ccjp_years_of_experience",
+            "type": "text",
+            "instructions": "Free text, e.g. 4 Years.",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_current_company",
+            "label": "Current Company",
+            "name": "ccjp_current_company",
+            "type": "text",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_notice_period",
+            "label": "Notice Period",
+            "name": "ccjp_notice_period",
+            "type": "text",
+            "instructions": "Free text, e.g. Immediate, 30 Days.",
+            "required": 0
+        },
+        {
+            "key": "field_ccjp_notes",
+            "label": "Admin Notes",
+            "name": "ccjp_notes",
+            "type": "textarea",
+            "instructions": "Internal only — never shown on any public-facing surface.",
+            "required": 0,
+            "rows": 6
+        },
+        {
+            "key": "field_ccjp_job",
+            "label": "Applied Job",
+            "name": "ccjp_job",
+            "type": "post_object",
+            "instructions": "The job this application was submitted for.",
+            "required": 0,
+            "post_type": [
+                "career_job"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1
+        },
+        {
+            "key": "field_ccjp_privacy_agreement",
+            "label": "Privacy Agreement",
+            "name": "ccjp_privacy_agreement",
+            "type": "true_false",
+            "required": 0,
+            "ui": 1,
+            "default_value": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "career_application"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Candidate fields captured on application submission, plus internal recruiter notes.",
+    "show_in_rest": 0
+}
