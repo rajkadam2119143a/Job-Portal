@@ -16,8 +16,9 @@ class CCJP_Taxonomy_Card_Renderer {
 			)
 		);
 
-		$count = self::open_job_count( $term );
-		$link  = get_term_link( $term );
+		$count       = self::open_job_count( $term );
+		$link        = get_term_link( $term );
+		$description = trim( (string) $term->description );
 		if ( is_wp_error( $link ) ) {
 			$link = '#';
 		}
@@ -25,16 +26,24 @@ class CCJP_Taxonomy_Card_Renderer {
 		ob_start();
 		?>
 		<a class="ccjp-taxonomy-card" href="<?php echo esc_url( $link ); ?>">
-			<span class="ccjp-taxonomy-card__name"><?php echo esc_html( $term->name ); ?></span>
-			<span class="ccjp-taxonomy-card__count">
-				<?php
-				printf(
-					/* translators: %d is the number of open jobs. */
-					esc_html( _n( '%d open role', '%d open roles', $count, 'careers-portal' ) ),
-					(int) $count
-				);
-				?>
+			<span class="ccjp-taxonomy-card__row">
+				<span class="ccjp-taxonomy-card__name"><?php echo esc_html( $term->name ); ?></span>
+				<span class="ccjp-taxonomy-card__count">
+					<?php echo esc_html( number_format_i18n( $count ) ); ?>
+					<span class="screen-reader-text">
+						<?php
+						printf(
+							/* translators: %d is the number of open jobs. */
+							esc_html( _n( '%d open role', '%d open roles', $count, 'careers-portal' ) ),
+							(int) $count
+						);
+						?>
+					</span>
+				</span>
 			</span>
+			<?php if ( '' !== $description ) : ?>
+				<span class="ccjp-taxonomy-card__description"><?php echo esc_html( $description ); ?></span>
+			<?php endif; ?>
 			<span class="ccjp-taxonomy-card__link"><?php echo esc_html( $options['link_text'] ); ?></span>
 		</a>
 		<?php

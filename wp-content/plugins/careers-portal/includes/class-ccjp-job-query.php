@@ -68,6 +68,9 @@ class CCJP_Job_Query {
 		$tax_query = array();
 
 		foreach ( self::TAXONOMIES as $key => $taxonomy ) {
+			// A taxonomy arg may be a single slug/ID (dropdowns, chips) or an
+			// array of them (checkbox groups) — WP_Query's tax_query 'terms'
+			// accepts either natively (array => "IN" match, i.e. any-of).
 			if ( ! empty( $args[ $key ] ) ) {
 				$tax_query[] = array(
 					'taxonomy' => $taxonomy,
@@ -147,8 +150,9 @@ class CCJP_Job_Query {
 
 		if ( ! empty( $args['experience'] ) ) {
 			$meta_query[] = array(
-				'key'   => 'ccjp_experience',
-				'value' => $args['experience'],
+				'key'     => 'ccjp_experience',
+				'value'   => $args['experience'],
+				'compare' => is_array( $args['experience'] ) ? 'IN' : '=',
 			);
 		}
 

@@ -25,9 +25,9 @@ class CCJP_Ajax {
 			'category'       => $this->sanitize_key_field( 'category' ),
 			'department'     => $this->sanitize_key_field( 'department' ),
 			'location'       => $this->sanitize_key_field( 'location' ),
-			'job_type'       => $this->sanitize_key_field( 'job_type' ),
-			'work_mode'      => $this->sanitize_key_field( 'work_mode' ),
-			'experience'     => isset( $_POST['experience'] ) ? sanitize_text_field( wp_unslash( $_POST['experience'] ) ) : '',
+			'job_type'       => $this->sanitize_multi_or_single( 'job_type' ),
+			'work_mode'      => $this->sanitize_multi_or_single( 'work_mode' ),
+			'experience'     => $this->sanitize_multi_or_single( 'experience' ),
 			'date_posted'    => isset( $_POST['date_posted'] ) ? absint( $_POST['date_posted'] ) : '',
 			'order'          => $this->sanitize_key_field( 'order', 'newest' ),
 			'posts_per_page' => isset( $_POST['per_page'] ) ? max( 1, absint( $_POST['per_page'] ) ) : 9,
@@ -71,5 +71,24 @@ class CCJP_Ajax {
 			return $default;
 		}
 		return sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) );
+	}
+
+	/**
+	 * Like sanitize_key_field(), but also accepts an array (checkbox-group
+	 * filters submit as job_type[]=a&job_type[]=b, which PHP already
+	 * collects into $_POST['job_type'] = array('a','b')) — single-select
+	 * callers (the older dropdown-based Job Search/Filters widgets) keep
+	 * getting a plain sanitized string back, unchanged.
+	 */
+	private function sanitize_multi_or_single( $post_key, $default = '' ) {
+		if ( empty( $_POST[ $post_key ] ) ) {
+			return $default;
+		}
+		$raw = wp_unslash( $_POST[ $post_key ] );
+		if ( is_array( $raw ) ) {
+			$clean = array_map( 'sanitize_text_field', $raw );
+			return array_values( array_filter( $clean, 'strlen' ) );
+		}
+		return sanitize_text_field( $raw );
 	}
 }

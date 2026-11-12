@@ -6,15 +6,38 @@
  *    every CSS custom property referenced here (--ccjp-columns, --ccjp-gap);
  *    the var() fallbacks only stop the layout collapsing before a value has
  *    been chosen.
- * 2. A "DEFAULT LOOK" section further down: a sensible out-of-the-box
- *    appearance (card borders/shadows/radius, button/badge styling) so the
- *    site looks finished before anyone opens Elementor — not a locked-in
- *    design. Every selector there is a single low-specificity class; the
- *    matching Elementor Style-tab control (added to each widget) always
- *    wins once an admin sets a value, since Elementor's generated CSS
- *    targets a more specific per-instance selector. Colors/fonts reference
- *    the site's Global Colors/Typography custom properties.
+ * 2. A "DEFAULT LOOK" section further down: the site's actual visual design
+ *    (BCCL/Times Group brand — paper white, masthead red, dark ink, serif
+ *    display type). Design tokens live in the :root block immediately below
+ *    and are the single source of truth for color/type/radius/shadow across
+ *    this file; the child theme's own stylesheet (site.css) reuses the same
+ *    custom properties rather than redefining them, since this file is
+ *    enqueued first (see hello-elementor-child/functions.php).
  */
+
+:root {
+	--ccjp-color-paper: #ffffff;
+	--ccjp-color-fog: #f8f9fa;
+	--ccjp-color-mist: #e1e3e6;
+	--ccjp-color-ash: #9aa0a6;
+	--ccjp-color-disabled: #bec2c6;
+	--ccjp-color-slate: #5f6368;
+	--ccjp-color-ink: #202124;
+	--ccjp-color-red: #db2f20;
+	--ccjp-color-red-soft: #fbe7e5;
+	--ccjp-color-success: #1e8e3e;
+
+	--ccjp-font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+	--ccjp-font-body: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+
+	--ccjp-radius-sm: 4px;
+	--ccjp-radius-md: 8px;
+	--ccjp-radius-lg: 12px;
+
+	--ccjp-shadow-1: 0 1px 2px rgba(32, 33, 36, 0.08), 0 1px 3px rgba(32, 33, 36, 0.1);
+	--ccjp-shadow-2: 0 2px 6px rgba(32, 33, 36, 0.12), 0 4px 8px rgba(32, 33, 36, 0.1);
+	--ccjp-shadow-3: 0 8px 16px rgba(32, 33, 36, 0.16), 0 12px 24px rgba(32, 33, 36, 0.12);
+}
 
 .ccjp-job-listing__grid {
 	display: grid;
@@ -116,8 +139,8 @@
 
 .ccjp-application-form__error {
 	/* Accessibility affordance, not a color/design decision — the actual
-	 * error color comes from Elementor's own text-color control when one
-	 * is added to this class, this just guarantees it reads as an alert. */
+	 * error color comes from a text-color rule when one is added to this
+	 * class, this just guarantees it reads as an alert. */
 	font-weight: bold;
 }
 
@@ -138,36 +161,59 @@
 }
 
 /* =========================================================================
- * DEFAULT LOOK — a sensible out-of-the-box appearance, not a locked-in
- * design. Every rule below is intentionally LOW SPECIFICITY (plain classes,
- * no IDs), so the moment an admin sets a value on the matching Elementor
- * Style-tab control (Job Card/Job Listing/Featured Jobs/Related Jobs all
- * share the "Job Cards" style section; Apply Button and the Application
- * Form have their own), Elementor's generated CSS — which always targets a
- * more specific, per-widget-instance selector — wins automatically. Colors
- * and fonts reference the site's Global Colors/Typography custom
- * properties so a Kit change cascades here too, rather than a separate
- * hardcoded palette.
+ * DEFAULT LOOK — the site's real visual design, driven entirely by the
+ * :root tokens above. Every selector here stays a single low-specificity
+ * class so page-specific overrides remain easy, but there is no longer an
+ * Elementor Kit indirection layer: these are the actual brand colors/type.
  * ========================================================================= */
 
 .ccjp-job-card {
-	background: #fff;
-	border: 1px solid #e4e6ec;
-	border-radius: 14px;
-	padding: 24px;
-	box-shadow: 0 1px 2px rgba(30, 32, 46, 0.05), 0 8px 24px -16px rgba(30, 32, 46, 0.25);
+	background: var(--ccjp-color-paper);
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: var(--ccjp-radius-lg);
+	padding: 20px;
+	box-shadow: var(--ccjp-shadow-1);
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (min-width: 768px) {
+	.ccjp-job-card {
+		padding: 24px;
+	}
 }
 
 .ccjp-job-card:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 2px 4px rgba(30, 32, 46, 0.06), 0 18px 40px -22px rgba(30, 32, 46, 0.35);
+	box-shadow: var(--ccjp-shadow-2);
+}
+
+.ccjp-job-card__head {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.ccjp-job-card__heading-group {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.ccjp-job-card__title-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
 }
 
 .ccjp-job-card__title {
-	margin: 0 0 8px;
-	font-family: var(--e-global-typography-primary-font-family, inherit);
-	color: var(--e-global-color-secondary, #23262e);
+	margin: 0;
+	font-family: var(--ccjp-font-display);
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 1.3;
+	color: var(--ccjp-color-ink);
 }
 
 .ccjp-job-card__title a {
@@ -175,100 +221,356 @@
 	text-decoration: none;
 }
 
+.ccjp-job-card__title a:hover {
+	color: var(--ccjp-color-red);
+}
+
 .ccjp-job-card__badge {
 	display: inline-block;
-	margin-bottom: 8px;
+	flex-shrink: 0;
+	margin: 0;
 	padding: 2px 10px;
 	border-radius: 999px;
-	background: var(--e-global-color-ccjp_brand_soft, #edf1fa);
-	color: var(--e-global-color-primary, #4c6fb0);
+	background: var(--ccjp-color-red-soft);
+	color: var(--ccjp-color-red);
 	font-size: 12px;
-	font-weight: 600;
+	font-weight: 700;
+}
+
+.ccjp-job-card__subtitle {
+	margin: 4px 0 0;
+	font-size: 12px;
+	color: var(--ccjp-color-slate);
 }
 
 .ccjp-job-card__meta {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px 20px;
-	margin: 0 0 12px;
+	margin: 20px 0 0;
 	padding: 0;
 	list-style: none;
 	font-size: 14px;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 }
 
-.ccjp-job-card__excerpt {
-	margin: 0 0 16px;
-	color: var(--e-global-color-text, #4b5563);
+.ccjp-job-card__meta-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 }
 
-.ccjp-job-card__view-btn,
-.ccjp-job-card__apply-btn {
-	display: inline-block;
-	padding: 8px 16px;
-	border: 1px solid var(--e-global-color-ccjp_border, #e4e6ec);
-	border-radius: 8px;
+.ccjp-job-card__meta-item svg {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.ccjp-job-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 16px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ccjp-job-card__tags li {
+	padding: 4px 12px;
+	border-radius: 999px;
+	background: var(--ccjp-color-fog);
+	color: var(--ccjp-color-slate);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.ccjp-job-card__link-arrow {
+	display: inline-flex;
+	position: relative;
+	flex-shrink: 0;
+	align-items: center;
+	gap: 4px;
+	white-space: nowrap;
 	font-size: 14px;
 	font-weight: 600;
+	color: var(--ccjp-color-ink);
 	text-decoration: none;
-	color: var(--e-global-color-secondary, #23262e);
+	padding-bottom: 2px;
+	transition: color 0.15s ease, gap 0.15s ease;
 }
 
-.ccjp-job-card__apply-btn {
-	background: var(--e-global-color-primary, #4c6fb0);
-	border-color: var(--e-global-color-primary, #4c6fb0);
-	color: #fff;
+/* Same reveal-underline technique as the primary nav (.bccl-nav__list a):
+ * no underline at rest, growing in from the left on hover rather than a
+ * static line that just changes color. */
+.ccjp-job-card__link-arrow::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 1.5px;
+	background: var(--ccjp-color-red);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.18s ease;
+}
+
+.ccjp-job-card__link-arrow:hover {
+	color: var(--ccjp-color-red);
+	gap: 8px;
+}
+
+.ccjp-job-card__link-arrow:hover::after {
+	transform: scaleX(1);
+}
+
+.ccjp-job-card__link-arrow svg {
+	width: 16px;
+	height: 16px;
+	flex: none;
 }
 
 .ccjp-taxonomy-card {
 	padding: 20px;
-	border: 1px solid #e4e6ec;
-	border-radius: 14px;
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: var(--ccjp-radius-lg);
 	text-decoration: none;
 	color: inherit;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .ccjp-taxonomy-card:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 8px 24px -16px rgba(30, 32, 46, 0.3);
+	box-shadow: var(--ccjp-shadow-2);
+	border-color: var(--ccjp-color-ink);
 }
 
 .ccjp-taxonomy-card__name {
 	display: block;
 	margin-bottom: 6px;
-	font-family: var(--e-global-typography-primary-font-family, inherit);
+	font-family: var(--ccjp-font-display);
 	font-weight: 700;
-	color: var(--e-global-color-secondary, #23262e);
-}
-
-.ccjp-taxonomy-card__count {
-	display: block;
-	margin-bottom: 10px;
-	font-size: 13px;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-ink);
 }
 
 .ccjp-taxonomy-card__link {
 	font-size: 13px;
 	font-weight: 600;
-	color: var(--e-global-color-primary, #4c6fb0);
+	color: var(--ccjp-color-red);
+}
+
+.ccjp-taxonomy-card .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.ccjp-taxonomy-card__row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.ccjp-taxonomy-card__count {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ccjp-color-slate);
+}
+
+.ccjp-taxonomy-card__description {
+	display: -webkit-box;
+	margin-top: 8px;
+	font-size: 14px;
+	color: var(--ccjp-color-slate);
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.ccjp-taxonomy-card__description:empty {
+	display: none;
+}
+
+/* "Explore by category" grid: count reads as a small badge, no "View
+ * Jobs" link text (the whole card is already the link). */
+.ccjp-category-grid .ccjp-taxonomy-card__link {
+	display: none;
+}
+
+.ccjp-category-grid .ccjp-taxonomy-card__count {
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: var(--ccjp-color-red-soft);
+	color: var(--ccjp-color-red);
+}
+
+/* Sidebar Departments/Locations (columns: 1): one bordered panel, plain
+ * spaced rows — no per-row card border/shadow, no dividers. */
+.ccjp-sidebar-list {
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: var(--ccjp-radius-lg);
+	background: var(--ccjp-color-paper);
+	box-shadow: var(--ccjp-shadow-1);
+	padding: 24px;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-listing__heading {
+	margin: 0;
+	font-size: 16px;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-listing__grid {
+	gap: 8px !important;
+	margin-top: 16px;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card {
+	display: block;
+	border: none;
+	border-radius: 0;
+	padding: 0;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card:hover {
+	transform: none;
+	box-shadow: none;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card__row {
+	font-size: 14px;
+	color: var(--ccjp-color-slate);
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card:hover .ccjp-taxonomy-card__name {
+	color: var(--ccjp-color-red);
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card__count {
+	font-size: 12px;
+}
+
+.ccjp-sidebar-list .ccjp-taxonomy-card__link,
+.ccjp-sidebar-list .ccjp-taxonomy-card__description {
+	display: none;
+}
+
+/* Compact horizontal row variant of the same job card, used by the Careers
+ * Marketplace results list — same markup/renderer as the grid card
+ * (.ccjp-job-card), just a container class that flips the layout. */
+.ccjp-job-list--rows {
+	display: flex;
+	flex-direction: column;
+	gap: var(--ccjp-gap, 16px);
+}
+
+.ccjp-job-list--rows .ccjp-job-card {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px 24px;
+}
+
+.ccjp-job-list--rows .ccjp-job-card:hover {
+	transform: none;
+	border-color: var(--ccjp-color-ink);
+}
+
+.ccjp-job-list--rows .ccjp-job-card__head {
+	flex: 1 1 auto;
+	min-width: 260px;
+}
+
+.ccjp-job-list--rows .ccjp-job-card__excerpt,
+.ccjp-job-list--rows .ccjp-job-card__tags {
+	flex-basis: 100%;
+}
+
+@media (max-width: 680px) {
+	.ccjp-job-list--rows .ccjp-job-card {
+		flex-direction: column;
+		align-items: stretch;
+	}
+}
+
+.ccjp-footer-columns {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 40px;
+	padding: 56px 0;
+}
+
+@media (max-width: 767px) {
+	.ccjp-footer-columns {
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+}
+
+.ccjp-footer-columns h3 {
+	margin: 0;
+	font-size: 16px;
+}
+
+.ccjp-footer-columns h4 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.ccjp-footer-columns .elementor-widget-text-editor {
+	margin-top: 12px;
+	max-width: 20rem;
+	font-size: 14px;
+}
+
+.ccjp-footer-columns .ccjp-footer-links {
+	margin-top: 16px;
+}
+
+.ccjp-footer-columns .ccjp-footer-links li {
+	font-size: 14px;
+}
+
+.ccjp-footer-bottom {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 20px 0;
+	border-top: 1px solid var(--ccjp-color-mist);
+	font-size: 13px;
+	color: var(--ccjp-color-slate);
 }
 
 .ccjp-apply-button {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	padding: 12px 24px;
-	border-radius: 8px;
-	background: var(--e-global-color-accent, #4c6fb0);
-	color: #fff;
+	padding: 14px 24px;
+	border-radius: var(--ccjp-radius-md);
+	background: var(--ccjp-color-red);
+	color: var(--ccjp-color-paper);
 	font-weight: 600;
 	text-decoration: none;
+	transition: filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ccjp-apply-button:hover {
+	filter: brightness(0.9);
+	box-shadow: var(--ccjp-shadow-2);
 }
 
 .ccjp-apply-button--sm {
-	padding: 8px 16px;
+	padding: 10px 18px;
 	font-size: 14px;
 }
 
@@ -287,23 +589,44 @@
 .ccjp-hero__search-input,
 .ccjp-hero__search-location,
 .ccjp-application-form__control {
-	padding: 10px 14px;
-	border: 1px solid #e4e6ec;
-	border-radius: 8px;
+	padding: 12px 14px;
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: var(--ccjp-radius-sm);
 	font-size: 15px;
+	font-family: inherit;
+	color: var(--ccjp-color-ink);
+	background: var(--ccjp-color-paper);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ccjp-job-search__field:focus,
+.ccjp-hero__search-input:focus,
+.ccjp-hero__search-location:focus,
+.ccjp-application-form__control:focus {
+	border-color: var(--ccjp-color-red);
+	box-shadow: 0 0 0 3px rgba(219, 47, 32, 0.14);
+	outline: none;
 }
 
 .ccjp-job-search__button,
 .ccjp-hero__search-button,
 .ccjp-job-filters__apply-button,
 .ccjp-application-form__submit {
-	padding: 10px 20px;
+	padding: 12px 22px;
 	border: none;
-	border-radius: 8px;
-	background: var(--e-global-color-accent, #4c6fb0);
-	color: #fff;
+	border-radius: var(--ccjp-radius-sm);
+	background: var(--ccjp-color-red);
+	color: var(--ccjp-color-paper);
 	font-weight: 600;
 	cursor: pointer;
+	transition: filter 0.15s ease;
+}
+
+.ccjp-job-search__button:hover,
+.ccjp-hero__search-button:hover,
+.ccjp-job-filters__apply-button:hover,
+.ccjp-application-form__submit:hover {
+	filter: brightness(0.9);
 }
 
 .ccjp-job-meta {
@@ -316,43 +639,44 @@
 }
 
 .ccjp-job-meta__label {
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 	font-weight: 600;
 }
 
 .ccjp-job-meta__value {
-	color: var(--e-global-color-secondary, #23262e);
+	color: var(--ccjp-color-ink);
 }
 
 .ccjp-job-description__heading {
 	margin-top: 32px;
-	font-family: var(--e-global-typography-primary-font-family, inherit);
-	color: var(--e-global-color-secondary, #23262e);
+	font-family: var(--ccjp-font-display);
+	color: var(--ccjp-color-ink);
 }
 
 .ccjp-job-description__list {
 	padding-left: 20px;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 }
 
 .ccjp-job-description__paragraph {
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 }
 
 .ccjp-site-nav {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 24px;
+	gap: 28px;
 }
 
 .ccjp-site-nav a {
 	text-decoration: none;
-	font-weight: 500;
-	color: var(--e-global-color-secondary, #23262e);
+	font-weight: 600;
+	font-size: 13px;
+	color: var(--ccjp-color-ink);
 }
 
 .ccjp-site-nav a:hover {
-	color: var(--e-global-color-primary, #4c6fb0);
+	color: var(--ccjp-color-red);
 }
 
 .ccjp-footer-links {
@@ -367,47 +691,209 @@
 
 .ccjp-footer-links a {
 	text-decoration: none;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-ash);
 }
 
 .ccjp-footer-links a:hover {
-	color: var(--e-global-color-primary, #4c6fb0);
+	color: var(--ccjp-color-paper);
 }
 
 .ccjp-stat-card {
 	padding: 20px;
-	background: #fff;
-	border: 1px solid #e4e6ec;
-	border-radius: 14px;
+	background: var(--ccjp-color-paper);
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: var(--ccjp-radius-lg);
 }
 
 .ccjp-stat-card__icon {
 	margin-bottom: 8px;
 	font-size: 20px;
-	color: var(--e-global-color-primary, #4c6fb0);
+	color: var(--ccjp-color-red);
+}
+
+/* Elementor renders icons either as an <i> font icon or an inline SVG
+ * (`e-font-icon-svg`) depending on the icon library setting. font-size
+ * alone constrains the <i> case but does nothing for an SVG, which then
+ * renders at its native/unconstrained size — this pins both to the same
+ * 1em box so an SVG icon never blows out the card's layout. */
+.ccjp-stat-card__icon svg,
+.ccjp-stat-card__icon i {
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	fill: currentColor;
 }
 
 .ccjp-stat-card__number {
-	font-family: var(--e-global-typography-primary-font-family, inherit);
+	font-family: var(--ccjp-font-display);
 	font-size: 28px;
 	font-weight: 700;
 	line-height: 1.1;
-	color: var(--e-global-color-secondary, #23262e);
+	color: var(--ccjp-color-ink);
+	font-variant-numeric: tabular-nums;
 }
 
 .ccjp-stat-card__label {
 	margin-top: 4px;
 	font-size: 13px;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 }
 
-.ccjp-hero__stats-row {
+.ccjp-stats-row {
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.ccjp-stats-row:last-child {
+	margin-bottom: 0;
+}
+
+.ccjp-job-count {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 14px;
+	margin-bottom: 16px;
+	border-radius: 999px;
+	background: var(--ccjp-color-red-soft);
+	color: var(--ccjp-color-red);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.ccjp-job-count::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentColor;
+	flex-shrink: 0;
+}
+
+.ccjp-hero-section {
+	padding: 56px 0;
+}
+
+.ccjp-hero__accent {
+	color: var(--ccjp-color-red);
+}
+
+.ccjp-hero__popular {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+	font-size: 13px;
+	color: var(--ccjp-color-slate);
+}
+
+.ccjp-hero__popular a {
+	padding: 2px 12px;
+	border: 1px solid var(--ccjp-color-mist);
+	border-radius: 999px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.ccjp-hero__popular a:hover {
+	border-color: var(--ccjp-color-red);
+	color: var(--ccjp-color-red);
+}
+
+.ccjp-logo {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	font-family: var(--ccjp-font-body);
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--ccjp-color-ink);
+}
+
+.ccjp-logo__mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: var(--ccjp-radius-sm);
+	background: var(--ccjp-color-ink);
+	color: var(--ccjp-color-paper);
+	font-family: var(--ccjp-font-display);
+	font-weight: 700;
+	flex-shrink: 0;
+}
+
+.ccjp-logo__mark svg {
+	width: 16px;
+	height: 16px;
+}
+
+.ccjp-header-actions {
+	display: flex;
+	align-items: center;
 	gap: 16px;
 }
 
-.ccjp-hero__stats-row > .elementor-element {
-	flex: 1 1 0;
+.ccjp-header-admin {
+	font-size: 14px;
+	color: var(--ccjp-color-slate);
+	text-decoration: none;
+}
+
+.ccjp-header-admin:hover {
+	color: var(--ccjp-color-red);
+}
+
+.ccjp-header-row {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.92);
+	backdrop-filter: saturate(180%) blur(10px);
+	border-bottom: 1px solid transparent;
+	padding: 18px 0;
+	transition: box-shadow 0.2s ease, border-color 0.2s ease, padding 0.2s ease;
+}
+
+.ccjp-header-row.is-scrolled {
+	border-color: var(--ccjp-color-mist);
+	box-shadow: var(--ccjp-shadow-1);
+	padding: 12px 0;
+}
+
+/* "Featured openings" / "Latest jobs" section heads: title (+ optional
+ * subtext) on the left, a nav button on the right, bottom-aligned. */
+.ccjp-section-head {
+	align-items: flex-end !important;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.ccjp-cta-band {
+	border-radius: var(--ccjp-radius-lg);
+	padding: 56px 32px;
+	text-align: center;
+	background: var(--ccjp-color-ink);
+	color: var(--ccjp-color-paper);
+}
+
+.ccjp-cta-band .elementor-widget-button {
+	display: flex;
+	justify-content: center;
+}
+
+.ccjp-cta-band .elementor-button {
+	background: var(--ccjp-color-red);
+	color: var(--ccjp-color-paper);
+	border-color: var(--ccjp-color-red);
+}
+
+.ccjp-cta-band .elementor-button:hover {
+	filter: brightness(0.9);
 }
 
 .ccjp-pill-tags {
@@ -417,14 +903,14 @@
 	gap: 8px;
 	margin-top: 12px;
 	font-size: 13px;
-	color: var(--e-global-color-text, #4b5563);
+	color: var(--ccjp-color-slate);
 }
 
 .ccjp-pill-tags a {
 	padding: 4px 12px;
 	border-radius: 999px;
-	background: var(--e-global-color-ccjp_surface_muted, #f7f8fa);
-	color: var(--e-global-color-text, #4b5563);
+	background: var(--ccjp-color-fog);
+	color: var(--ccjp-color-slate);
 	text-decoration: none;
 	font-size: 13px;
 }

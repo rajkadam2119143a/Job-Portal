@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/c/wamp64/bin/php/php8.3.14/php.exe\" \"C:\\\\Users\\\\Idealake\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--wamp64-www-job-portal\\\\e88cbd34-d7ce-472c-8761-a06773750b7b\\\\scratchpad\\\\ccjp-build-header-footer.php\")",
+      "Bash(curl -s --max-time 90 http://localhost/job-portal/ -o /c/Users/Idealake/AppData/Local/Temp/claude/c--wamp64-www-job-portal/e88cbd34-d7ce-472c-8761-a06773750b7b/scratchpad/home-styled.html -w 'HTTP:%{http_code}\\\\n')",
+      "Bash(\"/c/wamp64/bin/php/php8.3.14/php.exe\" \"C:\\\\Users\\\\Idealake\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--wamp64-www-job-portal\\\\e88cbd34-d7ce-472c-8761-a06773750b7b\\\\scratchpad\\\\ccjp-build-archive-template.php\")",
+      "Bash(curl -s --max-time 90 http://localhost/job-portal/careers/jobs/ -o /c/Users/Idealake/AppData/Local/Temp/claude/c--wamp64-www-job-portal/e88cbd34-d7ce-472c-8761-a06773750b7b/scratchpad/jobs-archive-styled.html -w 'HTTP:%{http_code}\\\\n')",
+      "Bash(/c/wamp64/bin/mariadb/mariadb11.5.2/bin/mysqldump.exe -h 127.0.0.1 -P 3307 -u root job_portal)",
+      "Bash(grep -n '$this->add_responsive_control\\(\\\\|$this->add_control\\(' wp-content/plugins/elementor/includes/elements/container.php)"
+    ]
+  }
+}

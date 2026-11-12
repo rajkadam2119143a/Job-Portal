@@ -30,6 +30,10 @@ class CCJP_Pages {
 				'title'   => __( 'Careers', 'careers-portal' ),
 				'parent'  => '',
 			),
+			'legacy'                 => array(
+				'title'   => __( 'Our Legacy', 'careers-portal' ),
+				'parent'  => '',
+			),
 			'teams'                  => array(
 				'title'   => __( 'Teams', 'careers-portal' ),
 				'parent'  => self::SLUG,

@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CCJP_VERSION', '1.1.0' );
+define( 'CCJP_VERSION', '1.2.5' );
 define( 'CCJP_MIN_WP', '6.0' );
 define( 'CCJP_MIN_PHP', '7.4' );
 define( 'CCJP_PLUGIN_FILE', __FILE__ );

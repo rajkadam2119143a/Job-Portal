@@ -1,0 +1,11 @@
+/*
+Theme Name: Test Child
+Template: twentytwentyfive
+Description: Generated child theme for "Test", built on the shared "twentytwentyfive" parent theme.
+Version: 1.0.0
+*/
+
+:root {
+  --site-primary-color: blue;
+  --site-secondary-color: white;
+}

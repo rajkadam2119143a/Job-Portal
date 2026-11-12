@@ -1,7 +1,7 @@
 /*
 Theme Name:   Hello Elementor Child
 Theme URI:    https://elementor.com/hello-theme/
-Description:  Child theme of Hello Elementor for the Careers Portal. Intentionally minimal — Elementor Pro Theme Builder controls all page structure (header, footer, archive, single, taxonomy templates); this theme only exists to host that.
+Description:  Child theme of Hello Elementor for the BCCL Careers Portal. Owns page structure directly (header.php, footer.php, front-page.php, archive/single-career_job.php, page-legacy.php, page-teams/departments/locations.php) — see functions.php. Elementor Pro Theme Builder is no longer used for these locations, though Elementor itself stays available for any page the site owner builds by hand.
 Author:       Careers Portal
 Template:     hello-elementor
 Version:      1.0.0
